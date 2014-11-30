@@ -58,7 +58,7 @@ var T = new Twit(config.get("Twitter")),
       token_secret: config.get("Twitter.access_token_secret")
     });
 
-var stream = T.stream('statuses/filter', { track: '#swlille' });
+var stream = T.stream('statuses/filter', { track: '#SWBe' });
 
 stream.on('tweet', function (tweet) {
   // Skip RTs & our account
@@ -68,7 +68,7 @@ stream.on('tweet', function (tweet) {
 
   // Easter egg
   if (tweet.user.default_profile_image) {
-    var tweet_content = '@' + tweet.user.screen_name + ' Coucou tête d\'oeuf !!! #swLille';
+    var tweet_content = '@' + tweet.user.screen_name + ' EggMaaaaan !!! #SWBe';
     twitter.post(tweet_content, null, tweet.id_str, function (error, response, body) {
       if (error) {
         console.error(error);
@@ -88,27 +88,22 @@ stream.on('tweet', function (tweet) {
   var tweet_content;
   async.waterfall([
     function (callback) {
-      if (Math.round(Math.random() * 10) % 2 ||
-          tweet.text.toLowerCase().indexOf('#kitten') >= 0 ||
+      if (tweet.text.toLowerCase().indexOf('#kitten') >= 0 ||
           tweet.text.toLowerCase().indexOf('#chaton') >= 0 ||
           tweet.text.toLowerCase().indexOf('#thecat') >= 0 ||
           tweet.text.toLowerCase().indexOf('#cat') >= 0||
           tweet.text.toLowerCase().indexOf('#chatoune') >= 0) {
-        if(Math.round(Math.random() * 10) % 2 ||
-            tweet.text.toLowerCase().indexOf('#thecat') >= 0 ||
-            tweet.text.toLowerCase().indexOf('#cat') >= 0||
-            tweet.text.toLowerCase().indexOf('#chatoune') >= 0) {
-            thecat(users, callback);
+        if(tweet.text.toLowerCase().indexOf('#thecat') >= 0 ||
+          tweet.text.toLowerCase().indexOf('#cat') >= 0||
+          tweet.text.toLowerCase().indexOf('#chatoune') >= 0) {
+          thecat(users, callback);
         } else {
             kitten(users, callback);
         }
       }
-      else {
-        chucknorris(callback);
-      }
     },
     function (content, image, callback) {
-      tweet_content = '@' + tweet.user.screen_name + ' ' + content + ' #5WLille';
+      tweet_content = '@' + tweet.user.screen_name + ' ' + content + ' #SWBe';
       twitter.post(tweet_content, image, tweet.id_str, callback);
       io.emit('tweet', {
         image: image,
@@ -116,6 +111,9 @@ stream.on('tweet', function (tweet) {
       });
     }
   ], function (error, response, body) {
+    console.log(error);
+    console.log(response);
+    console.log(body);
     if (error) {
       console.error(error);
     }
