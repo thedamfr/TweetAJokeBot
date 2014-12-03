@@ -68,7 +68,7 @@ stream.on('tweet', function (tweet) {
 
   // Easter egg
   if (tweet.user.default_profile_image) {
-    var tweet_content = '@' + tweet.user.screen_name + ' EggMaaaaan !!! #SWBe';
+    var tweet_content = '@' + tweet.user.screen_name + ' EggMaaaaan !!! #APIDays';
     twitter.post(tweet_content, null, tweet.id_str, function (error, response, body) {
       if (error) {
         console.error(error);
