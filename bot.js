@@ -58,7 +58,7 @@ var T = new Twit(config.get("Twitter")),
       token_secret: config.get("Twitter.access_token_secret")
     });
 
-var stream = T.stream('statuses/filter', { track: '#SWBe' });
+var stream = T.stream('statuses/filter', { track: '#APIDays' });
 
 stream.on('tweet', function (tweet) {
   // Skip RTs & our account
@@ -88,6 +88,7 @@ stream.on('tweet', function (tweet) {
   var tweet_content;
   async.waterfall([
     function (callback) {
+      var spamMode = true;
       if (tweet.text.toLowerCase().indexOf('#kitten') >= 0 ||
           tweet.text.toLowerCase().indexOf('#chaton') >= 0 ||
           tweet.text.toLowerCase().indexOf('#thecat') >= 0 ||
@@ -100,10 +101,12 @@ stream.on('tweet', function (tweet) {
         } else {
             kitten(users, callback);
         }
+      } else if (spamMode) {
+            kitten(users, callback);
       }
     },
     function (content, image, callback) {
-      tweet_content = '@' + tweet.user.screen_name + ' ' + content + ' #SWBe';
+      tweet_content = '@' + tweet.user.screen_name + ' ' + content + ' #APIDays';
       twitter.post(tweet_content, image, tweet.id_str, callback);
       io.emit('tweet', {
         image: image,
