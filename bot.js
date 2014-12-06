@@ -58,7 +58,7 @@ var T = new Twit(config.get("Twitter")),
       token_secret: config.get("Twitter.access_token_secret")
     });
 
-var stream = T.stream('statuses/filter', { track: '#APIDays' });
+var stream = T.stream('statuses/filter', { track: '#SWBe' });
 
 stream.on('tweet', function (tweet) {
   // Skip RTs & our account
@@ -68,7 +68,7 @@ stream.on('tweet', function (tweet) {
 
   // Easter egg
   if (tweet.user.default_profile_image) {
-    var tweet_content = '@' + tweet.user.screen_name + ' EggMaaaaan !!! #APIDays';
+    var tweet_content = '@' + tweet.user.screen_name + ' EggMaaaaan !!! #SWBe';
     twitter.post(tweet_content, null, tweet.id_str, function (error, response, body) {
       if (error) {
         console.error(error);
@@ -106,7 +106,7 @@ stream.on('tweet', function (tweet) {
       }
     },
     function (content, image, callback) {
-      tweet_content = '@' + tweet.user.screen_name + ' ' + content + ' #APIDays';
+      tweet_content = '@' + tweet.user.screen_name + ' ' + content + ' #SWBe';
       twitter.post(tweet_content, image, tweet.id_str, callback);
       io.emit('tweet', {
         image: image,
